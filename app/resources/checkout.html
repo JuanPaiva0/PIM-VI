@@ -1,0 +1,45 @@
+<!--[main]-->
+<div>
+  <header>
+    <h1 style="text-align: center;">
+      RESUMO DA COMPRA
+    </h1>
+
+    <p style="text-align: center;">
+      <b>Vendedor: </b> {{funcionario_nome}}
+    </p>
+
+    <p style="text-align: center;">
+      <b>Cliente: </b> {{cliente_nome}} <br>
+      <b>CPF: </b> {{cliente_cpf}} <br>
+    </p>
+  </header>
+  <body>
+    <table style="width: 100%; border-collapse: collapse;" border="1" cellpadding="5">
+      <thead style="background-color: #f0f0f0;">
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Preço Unitário</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--[itens]-->
+          <tr>
+            <td>{{nome}}</td>
+            <td style="text-align: center;">{{quantidade}}</td>
+            <td style="text-align: right;">R$ {{preco}}</td>
+            <td style="text-align: right;">R$ {{subtotal}}</td>
+          </tr>
+        <!--[/itens]-->
+      </tbody>
+    </table>
+  </body>
+  <footer>
+    <p style="text-align: center;">
+      <b>Data: </b> {{data}} | <b>Forma Pagamento: </b> {{forma_pagamento}} | <b>Valor Total: </b> R$ {{total}} 
+    </p>
+  </footer>
+</div>
+<!--[/main]-->

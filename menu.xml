@@ -1,0 +1,75 @@
+<menu>
+    <menuitem label='Home'>
+        <icon>fa:home fa-fw</icon>
+        <menu>
+            <menuitem label='Início'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>WelcomeView</action>
+            </menuitem>
+
+            <menuitem label='Home'>
+                <icon>fa:life-ring fa-fw</icon>
+                <action>Home</action>
+            </menuitem>
+            
+            <menuitem label='Aprenda'>
+                <icon>fa:book fa-fw</icon>
+                <action>LearnView</action>
+            </menuitem>
+            
+            <menuitem label='Template'>
+                <icon>fa:desktop fa-fw</icon>
+                <action>TemplateView</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='Supervisão'>
+        <icon>fa:cog fa-fw</icon>
+        <menu>
+            <menuitem label='Formualrio de Funcionarios'>
+                <icon>fa:cube fa-fw</icon>
+                <action>FuncionarioForm</action>
+            </menuitem>
+            
+            <menuitem label='Busca de Funcionarios'>
+                <icon>fa:search fa-fw</icon>
+                <action>FuncionarioBusca</action>
+            </menuitem>
+            <menuitem label='Gestão de Login Formulario'>
+                <icon>fa:search fa-fw</icon>
+                <action>GestaoLoginForm</action>
+            </menuitem>
+            <menuitem label='Gestão de Login Busca'>
+                <icon>fa:search fa-fw</icon>
+                <action>GestaoLoginBusca</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='Clientes'>
+        <icon>fa:cog fa-fw</icon>
+        <menu>
+            <menuitem label='Formualrio de Clientes'>
+                <icon>fa:cube fa-fw</icon>
+                <action>ClientesForm</action>
+            </menuitem>
+            
+            <menuitem label='Busca de Clientes'>
+                <icon>fa:search fa-fw</icon>
+                <action>ClientesBusca</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+    <menuitem label='Produtos'>
+        <icon>fa:cog fa-fw</icon>
+        <menu>
+            <menuitem label='Formualrio de Produtos'>
+                <icon>fa:cube fa-fw</icon>
+                <action>ProdutoForm</action>
+            </menuitem>
+            <menuitem label='Busca de Produtos'>
+                <icon>fa:search fa-fw</icon>
+                <action>ProdutoBusca</action>
+            </menuitem>
+        </menu>
+    </menuitem>
+</menu>
