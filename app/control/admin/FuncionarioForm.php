@@ -28,22 +28,20 @@ class FuncionarioForm extends TPage{
     $endereco = new TEntry('endereco');
     $telefone = new TEntry('telefone');
     $email    = new TEntry('email');
-    $senha    = new TPassword('senha');
     $cargo    = new TDBCombo('cargo_id', 'geek', 'Cargos', 'id', 'cargo');
     
-    $id -> setEditable(false);
-    $rg -> setMask('99.999.999-9');
-    $rg -> setMinLength(9);
-    $rg -> addValidation('RG', new TRequiredValidator);
-    $cpf -> setMask('999.999.999-99');
-    $cpf -> addValidation('CPF', new TRequiredValidator);
-    $nome -> addValidation('Nome', new TRequiredValidator);
+    $id       -> setEditable(false);
+    $rg       -> setMask('99.999.999-9');
+    $rg       -> setMinLength(9);
+    $rg       -> addValidation('RG', new TRequiredValidator);
+    $cpf      -> setMask('999.999.999-99');
+    $cpf      -> addValidation('CPF', new TRequiredValidator);
+    $nome     -> addValidation('Nome', new TRequiredValidator);
     $endereco -> addValidation('Endereco', new TRequiredValidator);
     $telefone -> setMask('(99) 99999-9999');
     $telefone -> addValidation('Telefone', new TRequiredValidator);
-    $email -> addValidation('Email', new TRequiredValidator);
-    $senha -> addValidation('Senha', new TRequiredValidator);
-    $cargo -> addValidation('Cargo', new TRequiredValidator);
+    $email    -> addValidation('Email', new TRequiredValidator);
+    $cargo    -> addValidation('Cargo', new TRequiredValidator);
     
     $row = $this -> form -> addFields( [new TLabel('Id'), $id],
                                        [new TLabel('RG'), $rg],
@@ -56,9 +54,8 @@ class FuncionarioForm extends TPage{
     $row -> layout = ['col-sm-3', 'col-sm-3', 'col-sm-6'];
     
     $row = $this -> form -> addFields( [new TLabel('Email'), $email],
-                                       [new TLabel('Senha'), $senha],
                                        [new TLabel('Cargo'), $cargo]);
-    $row -> layout = ['col-sm-6', 'col-sm-3', 'col-sm-3'];
+    $row -> layout = ['col-sm-7', 'col-sm-5'];
 
     $this -> form -> addAction('Salvar', new TAction([$this, 'onSave']), 'fa:save green');
     $this -> form -> addAction('Limpar', new TAction([$this, 'onClear']), 'fa:eraser red');
@@ -84,22 +81,7 @@ class FuncionarioForm extends TPage{
         throw new Exception('Usuário já cadastrado com esse RG!');
       }
 
-      if(SystemUsers::where('login', '=', $funcionario -> email) -> first()){
-        throw new Exception('Esse email já está cadastrado!');
-      }
-
-      $funcionario -> store();
-
-      $user = new SystemUsers;
-      $user -> nome     = $funcionario -> nome;
-      $user -> email    = $funcionario -> email;
-      $user -> login    = $funcionario -> email;
-      $user -> password = password_hash($funcionario -> senha, PASSWORD_BCRYPT);
-      $user -> cargo    = $funcionario -> cargo_id;
-      $user -> funcionario_id = $funcionario -> id;
-      $user -> status   = true;
-      $user -> store();
-      
+      $funcionario -> store(); 
       new TMessage('info', 'Funcionario cadastrado com sucesso!');     
       TTransaction::close();
     } catch (Exception $e) {

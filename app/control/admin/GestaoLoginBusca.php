@@ -23,23 +23,22 @@ class GestaoLoginBusca extends TPage{
 
     $this -> form = new BootstrapFormBuilder('busca_login_form');
     $this -> form -> setFormTitle('Cadastro dos Usários');
-
+    $this -> form -> setFieldSizes('100%');
+    
     $nome = new TEntry('nome');
 
     $this -> form -> addFields([new TLabel('Nome'), $nome]);
 
-    
     $this -> form -> addAction('Buscar', new TAction([$this, 'onBusca']), 'fa:search blue');
     $this -> form -> addAction('Limpar', new TAction([$this, 'onClear']), 'fa:eraser red');
-    $this -> form -> addAction('TEste', new TAction([$this, 'onTeste']), 'fa:eraser purple');
 
     $this -> datagrid = new BootstrapDatagridWrapper(new TDataGrid);
     $this -> datagrid -> width = '100%';
 
     $col_id = new TDataGridColumn('id', 'Id', 'left', '10%');
-    $col_funcionario = new TDataGridColumn('funcionario->nome','Funcionario', 'center', '40%');
+    $col_funcionario = new TDataGridColumn('nome','Funcionario', 'center', '40%');
     $col_login = new TDataGridColumn('login', 'Login', 'left', '30%');
-    $col_cargo = new TDataGridColumn('cargo->cargo', 'Cargo', 'left', '10%');
+    $col_cargo = new TDataGridColumn('cargo->cargo', 'Cargo', 'center', '20%');
     $col_status = new TDataGridColumn('status', 'Status', 'center', '10%');
 
     $this -> datagrid -> addColumn($col_id);
@@ -58,21 +57,6 @@ class GestaoLoginBusca extends TPage{
     parent::add( $panel );
   }
 
-  public function onTeste(){
-    try {
-      TTransaction::open('geek');
-
-      $funcionarios = Funcionarios::all();
-
-      print '<pre>';
-      print_r($funcionarios);
-      print '</pre>';
-      TTransaction::close();
-    } catch (Exception $e) {
-      new TMessage('error', $e -> getMessage());
-    }
-  }
-
   public function onReload(){
     try {
       TTransaction::open('geek');
@@ -84,6 +68,10 @@ class GestaoLoginBusca extends TPage{
 
       $this -> datagrid -> clear();
 
+      print '<pre>';
+      print_r($cadastros);
+      print '</pre>';
+      
       if($cadastros){
         foreach($cadastros as $cadastro){
         $this -> datagrid -> addItem($cadastro);    
@@ -103,6 +91,13 @@ class GestaoLoginBusca extends TPage{
 
   public function onClear(){
     $this -> form -> clear();
+  }
+
+  public function show(){
+    if(!$this -> loaded){
+      $this -> onReload(func_get_arg(0));
+    }
+    parent::show();
   }
 }
 ?>

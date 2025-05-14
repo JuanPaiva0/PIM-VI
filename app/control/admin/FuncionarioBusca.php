@@ -1,5 +1,4 @@
 <?php
-
 use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Database\TCriteria;

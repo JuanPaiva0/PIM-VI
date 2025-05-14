@@ -11,6 +11,7 @@ class Funcionarios extends TRecord{
   const IDPOLICY = 'max'; 
 
   private $cargos;
+  private $nome;
   
   public function __construct($id = null){
     parent::__construct($id);
@@ -21,7 +22,6 @@ class Funcionarios extends TRecord{
     parent::addAttribute('endereco');
     parent::addAttribute('telefone');
     parent::addAttribute('email');
-    parent::addAttribute('senha');
     parent::addAttribute('cargo_id');
   }
 
