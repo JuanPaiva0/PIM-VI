@@ -31,8 +31,6 @@ class LoginForm extends TPage{
     try {
       $data = $this -> form -> getData();
 
-      print_r($data);
-
       AuthServices::authenticate($data -> login, $data -> password);
     } catch (Exception $e) {
       new TMessage('error', $e -> getMessage());

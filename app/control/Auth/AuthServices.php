@@ -9,24 +9,30 @@ use Adianti\Registry\TSession;
 class AuthServices {
   public static function authenticate($login, $password){
     TTransaction::open('geek');
-    
+
     $criteria = new TCriteria();
-    $criteria -> add(new TFilter('login', '=', $login));
-    $criteria -> add(new TFilter('status', '=', true));
+    $criteria->add(new TFilter('login', '=', $login));
+    $criteria->add(new TFilter('status', '=', true));
 
     $repository = new TRepository('SystemUsers');
-    $user = $repository -> load($criteria);
+    $users = $repository->load($criteria);
 
-    if($user){
-      $user = $user[0];
-
-      if($user -> password === $password){
+    if ($users) {
+      $user = $users[0];
+      
+      if (password_verify($password, $user->password)) {
         TSession::setValue('user', $user);
-         TTransaction::close();
-         return true;
+        AdiantiCoreApplication::loadPage('Home');
+        TTransaction::close();
+        return true;
+      } else {
+        throw new Exception('Senha inválida!');
       }
+    } else {
+      throw new Exception('Usuário não encontrado ou inativo!'); 
     }
-   TTransaction::close();
+
+    TTransaction::close();
     throw new Exception('Credenciais inválidas ou usuário inativo!');
   }
 

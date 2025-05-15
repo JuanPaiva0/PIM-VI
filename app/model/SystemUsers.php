@@ -6,8 +6,6 @@ class SystemUsers extends TRecord{
   const TABLENAME = 'system_users';
   const PRIMARYKEY = 'id';
   const IDPOLICY = 'max'; 
-
-  private $cargo;
   
   public function __construct($id = null){
     parent::__construct($id);
@@ -20,11 +18,9 @@ class SystemUsers extends TRecord{
     parent::addAttribute('funcionario_id');
     parent::addAttribute('status');
   }
+  
   public function get_cargo(){
-    if(empty($this -> cargo)){
-      $this -> cargo = new Cargos($this -> cargo_id);
-    }
-    return $this -> cargo;
+    return new Cargos($this->cargo);
   }
 }
 ?>

@@ -104,7 +104,7 @@ class GestaoLoginForm extends TPage{
       
       $system_users -> nome           = $funcionario -> nome;
       $system_users -> login          = $dados -> login;
-      $system_users -> password         = password_hash($dados->password, PASSWORD_DEFAULT);
+      $system_users -> password       = password_hash($dados->password, PASSWORD_DEFAULT);
       $system_users -> email          = $funcionario -> email;
       $system_users -> cargo          = $funcionario -> cargo_id;
       $system_users -> funcionario_id = $funcionario -> id;

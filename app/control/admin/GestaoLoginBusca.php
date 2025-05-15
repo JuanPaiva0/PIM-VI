@@ -5,6 +5,7 @@ use Adianti\Control\TPage;
 use Adianti\Database\TCriteria;
 use Adianti\Database\TRepository;
 use Adianti\Database\TTransaction;
+use Adianti\Widget\Base\TElement;
 use Adianti\Widget\Container\TPanelGroup;
 use Adianti\Widget\Datagrid\TDataGrid;
 use Adianti\Widget\Datagrid\TDataGridColumn;
@@ -35,11 +36,26 @@ class GestaoLoginBusca extends TPage{
     $this -> datagrid = new BootstrapDatagridWrapper(new TDataGrid);
     $this -> datagrid -> width = '100%';
 
-    $col_id = new TDataGridColumn('id', 'Id', 'left', '10%');
-    $col_funcionario = new TDataGridColumn('nome','Funcionario', 'center', '40%');
+    $col_id = new TDataGridColumn('id', 'Id', 'left', '5%');
+    $col_funcionario = new TDataGridColumn('nome','Funcionario', 'left', '30%');
     $col_login = new TDataGridColumn('login', 'Login', 'left', '30%');
     $col_cargo = new TDataGridColumn('cargo->cargo', 'Cargo', 'center', '20%');
-    $col_status = new TDataGridColumn('status', 'Status', 'center', '10%');
+    $col_status = new TDataGridColumn('status', 'Status', 'center', '15%');
+
+    $col_status -> setTransformer(function($value){
+      $label = new TElement('span');
+      $label -> style = 'text-shadow:none; font-size:12px; padding: 4px 8px; border-radius: 4px; color: white;';
+
+      if($value){
+        $label -> class = 'bg-success';
+        $label -> add('Ativo');
+      } else {
+        $label -> class = 'bg-danger';
+        $label -> add('Inativo');
+      }
+
+      return $label;
+    });
 
     $this -> datagrid -> addColumn($col_id);
     $this -> datagrid -> addColumn($col_funcionario);
@@ -67,14 +83,9 @@ class GestaoLoginBusca extends TPage{
       $cadastros = $repository -> load($criteria);
 
       $this -> datagrid -> clear();
-
-      print '<pre>';
-      print_r($cadastros);
-      print '</pre>';
-      
       if($cadastros){
         foreach($cadastros as $cadastro){
-        $this -> datagrid -> addItem($cadastro);    
+          $this -> datagrid -> addItem($cadastro);    
         }
       }
 

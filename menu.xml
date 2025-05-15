@@ -1,27 +1,7 @@
 <menu>
     <menuitem label='Home'>
-        <icon>fa:home fa-fw</icon>
-        <menu>
-            <menuitem label='Início'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>WelcomeView</action>
-            </menuitem>
-
-            <menuitem label='Home'>
-                <icon>fa:life-ring fa-fw</icon>
-                <action>Home</action>
-            </menuitem>
-            
-            <menuitem label='Aprenda'>
-                <icon>fa:book fa-fw</icon>
-                <action>LearnView</action>
-            </menuitem>
-            
-            <menuitem label='Template'>
-                <icon>fa:desktop fa-fw</icon>
-                <action>TemplateView</action>
-            </menuitem>
-        </menu>
+        <icon>fa:home fa-fw</icon>               
+        <action>Home</action>
     </menuitem>
     <menuitem label='Supervisão'>
         <icon>fa:cog fa-fw</icon>
@@ -71,5 +51,9 @@
                 <action>ProdutoBusca</action>
             </menuitem>
         </menu>
+    </menuitem>
+    <menuitem label="Logout">
+      <icon>fas:sign-out-alt fa-fw</icon>
+      <action>AuthServices#method=logout#static=1</action>
     </menuitem>
 </menu>
