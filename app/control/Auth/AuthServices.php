@@ -1,5 +1,4 @@
 <?php
-use Adianti\Core\AdiantiCoreApplication;
 use Adianti\Database\TCriteria;
 use Adianti\Database\TFilter;
 use Adianti\Database\TRepository;
@@ -18,13 +17,15 @@ class AuthServices {
     $users = $repository->load($criteria);
 
     if ($users) {
-      $user = $users[0];
-      
+      $user = $users[0];      
       if (password_verify($password, $user->password)) {
         TSession::setValue('user', $user);
-        AdiantiCoreApplication::loadPage('Home');
+        TSession::setValue('logged', true);
+        
         TTransaction::close();
-        return true;
+
+        echo "<script>window.location = 'index.php?class=Home';</script>";
+        exit;
       } else {
         throw new Exception('Senha inválida!');
       }
@@ -38,7 +39,7 @@ class AuthServices {
 
   public static function logout(){
     TSession::clear();
-    AdiantiCoreApplication::loadPage('LoginForm');
+    echo "<script>window.location = 'index.php?class=LoginForm';</script>";
+    exit;
   }
 }
-?>

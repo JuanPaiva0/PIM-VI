@@ -47,8 +47,9 @@ class Home extends TPage
   private function createCard($imagem, $titulo, $descricao, $action)
   {
     $card = new TElement('div');
-    $card->style = 'width: 280px; padding: 25px; background:whitesmoke; border-radius: 10px; 
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; text-align: center;
+    $card->style = 'width: 280px; padding: 25px; background: linear-gradient(145deg, #cbcbcb, #f1f1f1); border-radius: 20px; 
+                    box-shadow:  28px 28px 56px #a5a5a5, -28px -28px 56px #dfdfdf;
+                    cursor: pointer; text-align: center;
                     transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center;';
 
     $card->onclick = "__adianti_load_page('{$action->serialize()}')";
