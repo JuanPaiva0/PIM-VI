@@ -8,6 +8,7 @@ use Adianti\Database\TTransaction;
 use Adianti\Widget\Base\TElement;
 use Adianti\Widget\Container\TPanelGroup;
 use Adianti\Widget\Datagrid\TDataGrid;
+use Adianti\Widget\Datagrid\TDataGridAction;
 use Adianti\Widget\Datagrid\TDataGridColumn;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Form\TEntry;
@@ -39,7 +40,7 @@ class GestaoLoginBusca extends TPage{
     $col_id = new TDataGridColumn('id', 'Id', 'left', '5%');
     $col_funcionario = new TDataGridColumn('nome','Funcionario', 'left', '30%');
     $col_login = new TDataGridColumn('login', 'Login', 'left', '30%');
-    $col_cargo = new TDataGridColumn('cargo->cargo', 'Cargo', 'center', '20%');
+    $col_cargo = new TDataGridColumn('cargo_obj->cargo', 'Cargo', 'center', '20%');
     $col_status = new TDataGridColumn('status', 'Status', 'center', '15%');
 
     $col_status -> setTransformer(function($value){
@@ -63,6 +64,10 @@ class GestaoLoginBusca extends TPage{
     $this -> datagrid -> addColumn($col_cargo);
     $this -> datagrid -> addColumn($col_status);
 
+    $action = new TDataGridAction(['GestaoLoginForm', 'onEdit'], ['key' => '{id}']);
+
+    $this -> datagrid -> addAction($action, 'Editar', 'fa:edit blue');
+    
     $this -> datagrid -> createModel();
 
     $panel = new TPanelGroup;

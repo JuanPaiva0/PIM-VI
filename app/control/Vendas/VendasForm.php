@@ -97,7 +97,6 @@ class VendasForm extends TPage{
     $panel -> add(new TLabel('Total: '));
     $panel -> add($this -> total);
     $panel -> addHeaderActionLink('Finalizar', new TAction(['CheckoutForm', 'onReload']), 'fa:check green');
-    $panel -> addHeaderActionLink('PDF', new TAction([$this, 'onPDF']), 'fa:file-pdf red');
 
     
     $hbox = new THBox;
@@ -105,35 +104,6 @@ class VendasForm extends TPage{
     $hbox -> add($panel) -> style.='vertical-align: top; width:55%;';
     
     parent::add($hbox);
-  }
-
-  public function onPDF($param){
-    try {
-      $html = clone $this -> datagrid;
-      $conteudo = file_get_contents('app/resources/styles-print.html') . $html -> getContents();
-
-      $dompdf = new \Dompdf\Dompdf();
-      $dompdf -> loadHtml($conteudo);
-      $dompdf -> setPaper('A4', 'portrait');
-      $dompdf -> render();  
-
-      $file = 'app/output/vendas.pdf';
-
-      file_put_contents($file, $dompdf -> output());
-
-      $window = TWindow::create('PDF', 0.8, 0.8);
-
-      $obj = new TElement('object');
-      $obj -> data = $file;
-      $obj -> type = 'application/pdf';
-      $obj -> style = 'width: 100%; height: calc(100vh - 10px);';
-
-      $window -> add($obj);
-      $window -> show();
-      
-    } catch (\Exception $e) {
-      new TMessage('error', $e -> getMessage());
-    }
   }
 
   public function onEdit($param){

@@ -11,7 +11,6 @@ class Funcionarios extends TRecord{
   const IDPOLICY = 'max'; 
 
   private $cargos;
-  private $nome;
   
   public function __construct($id = null){
     parent::__construct($id);

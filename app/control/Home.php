@@ -13,7 +13,7 @@ class Home extends TPage
     $panel = new TPanelGroup();
 
     $container = new TElement('div');
-    $container->style = 'width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center;';
+    $container->style = 'width: 100%; height: 75vh; display: flex; justify-content: center; align-items: center;';
 
     $cardsContainer = new TElement('div');
     $cardsContainer->style = 'display: flex; flex-wrap: wrap; gap: 50px; justify-content: center; padding: 20px; max-width: 1200px;';

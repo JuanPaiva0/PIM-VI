@@ -66,6 +66,7 @@ class CheckoutForm extends TPage{
     $row = $info_cliente->addFields([new TLabel('Endereço'), $cliente_endereco],
                                     [new TLabel('Telefone'), $cliente_telefone]);                                    
     $row->layout = ['col-sm-8', 'col-sm-4'];
+
     
     $panel = new TPanelGroup('Informações do Cliente');
     $panel->add($info_cliente);
@@ -87,6 +88,7 @@ class CheckoutForm extends TPage{
                                       [new TLabel('Valor Total'), $valorTotal]);
     $row -> layout = ['col-sm-6', 'col-sm-6'];
 
+    $this -> form -> addHeaderAction('Novo Cliente', new TAction(['ClientesForm', 'onReload']), 'fa:plus green');
     $this -> form -> addHeaderAction('Limpar', new TAction([$this, 'onClear']), 'fa:eraser red');
     $this -> form -> addHeaderAction('Concluir', new TAction([$this, 'onConcluir']), 'fa:save blue');
 
@@ -158,11 +160,14 @@ class CheckoutForm extends TPage{
       $registro_venda ->store();
 
       foreach($produtos as $produto){
+        $estoque = new Produtos($produto->id);
+        $estoque -> quantidade -= $produto -> quantidade;
+
         $item = new ItensVenda();
-        $item->venda_id = $registro_venda->id;
+        $item -> venda_id   = $registro_venda -> id;
         $item -> produto_id = $produto -> id;
         $item -> quantidade = $produto -> quantidade;
-        $item -> subtotal = $produto -> quantidade * $produto -> preco;
+        $item -> subtotal   = $produto -> quantidade * $produto -> preco;
         $item -> store();
       }
 

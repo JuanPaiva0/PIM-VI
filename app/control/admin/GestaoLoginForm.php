@@ -10,6 +10,7 @@ use Adianti\Widget\Container\THBox;
 use Adianti\Widget\Container\TPanelGroup;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Form\TCheckList;
+use Adianti\Widget\Form\TCombo;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Form\TLabel;
@@ -31,7 +32,6 @@ class GestaoLoginForm extends TPage{
     $func_login = new TEntry('login');
     $func_senha = new TPassword('password');
     $func_confirm_senha = new TPassword('confirm_pass');
-
     $func_id   -> setEditable(false);
     $func_nome -> setEditable(false);
 
@@ -42,7 +42,7 @@ class GestaoLoginForm extends TPage{
     $row = $this->form->addFields([new TLabel('Login'), $func_login],
                                   [new TLabel('Senha'), $func_senha],
                                   [new TLabel('Confirmar Senha'), $func_confirm_senha]);
-    $row->layout = ['col-sm-6', 'col-sm-3', 'col-sm-3'];
+    $row->layout = ['col-sm-4', 'col-sm-4', 'col-sm-4'];
 
     $this -> form -> addAction('Cadastrar', new TAction([$this, 'onCadastrar']), 'fa:plus-circle green');
     $this -> form -> addAction('Limpar', new TAction([$this, 'onClear']), 'fa:eraser red');
@@ -75,6 +75,21 @@ class GestaoLoginForm extends TPage{
     $panel -> add($this -> funcionario_list);
     
     parent::add($panel);
+  }
+
+  public function onEdit($param){
+    try {
+      TTransaction::open('geek');
+      if(isset($param['key'])){
+        $id = $param['key'];
+        $funcionario = new SystemUsers($id);
+        $this -> form -> setData($funcionario);
+      }
+      TTransaction::close();
+    } catch (Exception $e) {
+      TTransaction::rollback();
+      new TMessage('error', $e -> getMessage());
+    }
   }
 
   public function onCadastrar($param){

@@ -66,6 +66,10 @@ private $form;
     parent::add($this -> form);
   }
 
+  public function onReload(){
+    
+  }
+
   public function onSave($param){
     try {
       TTransaction::open('geek');
