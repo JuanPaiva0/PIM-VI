@@ -70,7 +70,7 @@ class GestaoLoginBusca extends TPage{
     $this -> datagrid -> addColumn($col_cargo);
     $this -> datagrid -> addColumn($col_status);
 
-    $action = new TDataGridAction(['GestaoLoginForm', 'onEdit'], ['key' => '{id}']);
+    $action = new TDataGridAction(['GestaoLoginEdicao', 'onEdit'], ['key' => '{id}']);
 
     $this -> datagrid -> addAction($action, 'Editar', 'fa:edit blue');
     

@@ -41,6 +41,7 @@ class CheckoutForm extends TPage{
     $statusVenda     = new TDBCombo('statusVenda', 'geek', 'StatusVenda', 'id', 'status');
 
     $funcionario -> setMinLength(1);
+    $funcionario -> setEditable(false);
     $cliente     -> setMinLength(1);
     $dataVenda   -> setMask('dd/mm/yyyy');
     $dataVenda   -> setDatabaseMask('yyyy-mm-dd');
@@ -134,8 +135,11 @@ class CheckoutForm extends TPage{
       $total += $produto -> preco * $produto -> quantidade;
     }
 
+    $funcionario = TSession::getValue('user');
+
     $form_data = new stdClass;
     $form_data -> valorTotal = $total;
+    $form_data -> funcionario = $funcionario -> funcionario_id;
 
     TForm::sendData('form_checkout', $form_data);
    } catch (Exception $e) {
