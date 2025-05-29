@@ -6,14 +6,17 @@ use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TLabel;
 use Adianti\Widget\Wrapper\TDBCombo;
-use Adianti\Widget\Wrapper\TDBEntry;
 use Adianti\Wrapper\BootstrapFormBuilder;
 
 class ProdutoForm extends TPage{
   private $form;
   public function __construct(){
     parent::__construct();
-    
+    if(!PermissionHelper::accessEstoquista()){
+      new TMessage('error', 'Acesso restrito: apenas estoquistas e supervisores podem acessar essa tela',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
     $this -> form = new BootstrapFormBuilder('form_produto');
     $this -> form -> setFormTitle('Cadastro de Produtos');
     $this -> form -> setFieldSizes('100%');

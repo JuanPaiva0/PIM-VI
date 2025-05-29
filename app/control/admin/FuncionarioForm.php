@@ -1,5 +1,4 @@
 <?php
-
 use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Database\TTransaction;
@@ -7,7 +6,6 @@ use Adianti\Validator\TRequiredValidator;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TLabel;
-use Adianti\Widget\Form\TPassword;
 use Adianti\Widget\Wrapper\TDBCombo;
 use Adianti\Wrapper\BootstrapFormBuilder;
 
@@ -15,7 +13,11 @@ class FuncionarioForm extends TPage{
   private $form;
   public function __construct(){
     parent::__construct();
-
+    if(!PermissionHelper::accessSupervisor()){
+      new TMessage('error', 'Acesso restrito: apenas supervisores podem acessar essa tela',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
     $this -> form = new BootstrapFormBuilder('form_funcionario');
     $this -> form -> setClientValidation(true);
     $this -> form -> setFormTitle('Cadastro de Funcionario');

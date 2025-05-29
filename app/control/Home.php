@@ -74,4 +74,8 @@ class Home extends TPage
 
     return $card;
   }
+
+  public function onReload(){
+    
+  }
 }

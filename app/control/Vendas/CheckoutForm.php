@@ -23,6 +23,11 @@ class CheckoutForm extends TPage{
   private $html;
   public function __construct(){
     parent::__construct();
+    if(!PermissionHelper::accessAtendente()){
+      new TMessage('error', 'Acesso restrito: apenas atendentes e supervisores podem acessar essa tela!',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
     $this -> form = new BootstrapFormBuilder('form_checkout');
     $this -> form -> setFormTitle('Finalizar Venda');
     $this -> form -> setFieldSizes('100%');

@@ -25,7 +25,11 @@ class FuncionarioBusca extends TPage{
   
   public function __construct(){
     parent::__construct();
-
+    if(!PermissionHelper::accessSupervisor()){
+      new TMessage('error', 'Acesso restrito: apenas supervisores podem acessar essa tela',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
     $this -> form = new BootstrapFormBuilder('form_busca_funcionario');
     $this -> form -> setFormTitle('Busca de Funcionario');
 
@@ -78,7 +82,6 @@ class FuncionarioBusca extends TPage{
 
       $funcionarios = $repository -> load($criteria);
 
-      
       $this -> datagrid -> clear();
       if($funcionarios){
         foreach($funcionarios as $funcionario){

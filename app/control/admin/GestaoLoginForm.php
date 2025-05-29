@@ -10,7 +10,6 @@ use Adianti\Widget\Container\THBox;
 use Adianti\Widget\Container\TPanelGroup;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Form\TCheckList;
-use Adianti\Widget\Form\TCombo;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Form\TLabel;
@@ -23,6 +22,12 @@ class GestaoLoginForm extends TPage{
   public function __construct(){
     parent::__construct();
 
+    if(!PermissionHelper::accessSupervisor()){
+      new TMessage('error', 'Acesso restrito: apenas supervisores podem acessar essa tela',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
+    
     $this -> form = new BootstrapFormBuilder('gestao_login_form');
     $this -> form -> setFormTitle('Gestão de Login');
     $this -> form ->setFieldSizes('100%');

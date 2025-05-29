@@ -23,6 +23,12 @@ class GestaoLoginBusca extends TPage{
   public function __construct(){
     parent::__construct();
 
+    if(!PermissionHelper::accessSupervisor()){
+      new TMessage('error', 'Acesso restrito: apenas supervisores podem acessar essa tela',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
+
     $this -> form = new BootstrapFormBuilder('busca_login_form');
     $this -> form -> setFormTitle('Cadastro dos Usários');
     $this -> form -> setFieldSizes('100%');

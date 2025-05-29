@@ -7,7 +7,6 @@ use Adianti\Database\TFilter;
 use Adianti\Database\TRepository;
 use Adianti\Database\TTransaction;
 use Adianti\Registry\TSession;
-use Adianti\Widget\Base\TElement;
 use Adianti\Widget\Container\THBox;
 use Adianti\Widget\Container\TPanelGroup;
 use Adianti\Widget\Datagrid\TDataGrid;
@@ -32,7 +31,11 @@ class VendasForm extends TPage{
  
   public function __construct(){
     parent::__construct();
-
+    if(!PermissionHelper::accessAtendente()){
+      new TMessage('error', 'Acesso restrito: apenas atendentes e supervisores podem acessar essa tela!',
+      new TAction(['Home', 'onReload']));
+      exit;
+    }
     $this -> form = new BootstrapFormBuilder('form_Vendas');
     $this -> form -> setFormTitle('Vendas');
     $this -> form -> setFieldSizes('100%');

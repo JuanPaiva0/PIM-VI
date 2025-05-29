@@ -1,5 +1,4 @@
 <?php
-
 use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Database\TCriteria;
@@ -29,6 +28,11 @@ class ProdutoBusca extends TPage{
   public function __construct(){
     parent::__construct();
 
+    if(!PermissionHelper::accessEstoquista()){
+        new TMessage('error', 'Acesso restrito: apenas estoquistas e supervisores podem acessar essa tela',
+        new TAction(['Home', 'onReload']));
+        exit;
+    }
     $this -> form = new BootstrapFormBuilder('form_busca_produto');
     $this -> form -> setFormTitle('Busca de Produtos');
     $this -> form -> setFieldSizes('100%');
