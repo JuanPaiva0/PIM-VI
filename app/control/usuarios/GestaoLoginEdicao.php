@@ -105,7 +105,7 @@ class GestaoLoginEdicao extends TPage{
 
   public static function onClose($param){
     TScript::create("Template.closeRightPanel()");
-     TScript::create("__adianti_load_page('index.php?class=GestaoLoginBusca&method=onReload');");
+    TScript::create("__adianti_load_page('index.php?class=GestaoLoginBusca&method=onReload');");
   }
 }
 ?>

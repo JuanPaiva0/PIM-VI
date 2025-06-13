@@ -6,9 +6,9 @@ use Adianti\Database\TRecord;
 use Adianti\Database\TRepository;
 
 class Funcionarios extends TRecord{
-  const TABLENAME = 'funcionarios';
+  const TABLENAME  = 'funcionarios';
   const PRIMARYKEY = 'id';
-  const IDPOLICY = 'max'; 
+  const IDPOLICY   = 'max'; 
 
   private $cargos;
   
@@ -22,6 +22,24 @@ class Funcionarios extends TRecord{
     parent::addAttribute('telefone');
     parent::addAttribute('email');
     parent::addAttribute('cargo_id');
+    parent::addAttribute('caminho_documentos');
+  }
+
+  public function getSubpastas(){
+    $subpastas = [];
+    
+    if(!empty($this -> caminho_documentos) && is_dir($this -> caminho_documentos)){
+      foreach(scandir($this -> caminho_documentos) as $item){
+        if($item === '.' || $item === '..') continue;
+        
+        $subpath = $this -> caminho_documentos . DIRECTORY_SEPARATOR . $item;
+
+        if(is_dir($subpath)){
+          $subpastas[$item] = $item;
+        }
+      }
+    }
+    return $subpastas;
   }
 
   public function get_cargo(){

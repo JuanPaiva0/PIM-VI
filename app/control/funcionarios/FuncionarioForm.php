@@ -84,7 +84,12 @@ class FuncionarioForm extends TPage{
       }
 
       $funcionario -> store(); 
-      new TMessage('info', 'Funcionario cadastrado com sucesso!');     
+
+      $caminho_diretorio = $this -> onCriaDiretorio($funcionario);
+
+      $funcionario -> caminho_documentos = $caminho_diretorio;
+      $funcionario -> store();
+      new TMessage('info', 'Funcionario cadastrado com sucesso! Diretório criado: ' . $caminho_diretorio,);     
       TTransaction::close();
     } catch (Exception $e) {
       TTransaction::rollback();
@@ -92,6 +97,42 @@ class FuncionarioForm extends TPage{
     }
   }
 
+  public function onCriaDiretorio($funcionario){
+    $rootPath = 'app/documents/funcionarios';
+    if(!is_dir($rootPath)){
+      if(!mkdir($rootPath, 0755, true)){
+        throw new Exception('Não foi possível criar o diretório principal!');
+      }
+    }
+
+    $nomeDiretorio = $this -> organizaNome($funcionario -> nome);
+    $caminho = $rootPath . DIRECTORY_SEPARATOR . $funcionario -> id . '_' . $nomeDiretorio;
+
+    if(is_dir($caminho)){
+      throw new Exception('Diretorio já existe para este funcionario!');
+    }
+
+    if(!mkdir($caminho, 0755, true)){
+      throw new Exception('Falha ao criar diretório para o funcionario!');
+    }
+
+    $subdiretorios = ['admissao', 'espelho_ponto', 'atestados', 'demissao'];
+    foreach($subdiretorios as $subdir){
+      $subpath = $caminho . DIRECTORY_SEPARATOR . $subdir;  
+      if(!mkdir($subpath, 0755)){
+        throw new Exception("Falha ao criar subdiretório: {$subpath}");
+      }
+    }
+
+    return realpath($caminho); 
+  }
+
+  private function organizaNome($nome){
+    $nome = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $nome);
+    $nome = preg_replace('/_+/', '_', $nome);
+    return trim($nome, '_');
+  }
+  
   public function onClear($param){
     $this -> form -> clear();
   }

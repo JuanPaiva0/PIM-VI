@@ -6,7 +6,7 @@
     <menuitem label='Supervisão'>
         <icon>fa:cog fa-fw</icon>
         <menu>
-            <menuitem label='Formualrio de Funcionarios'>
+            <menuitem label='Formulario de Funcionarios'>
                 <icon>fa:cube fa-fw</icon>
                 <action>FuncionarioForm</action>
             </menuitem>
@@ -22,6 +22,10 @@
             <menuitem label='Gestão de Login Busca'>
                 <icon>fa:search fa-fw</icon>
                 <action>GestaoLoginBusca</action>
+            </menuitem>
+            <menuitem label='Documentos'>
+                <icon>fa:file fa-fw</icon>
+                <action>DocumentosTreeView#method=onReload</action>
             </menuitem>
         </menu>
     </menuitem>

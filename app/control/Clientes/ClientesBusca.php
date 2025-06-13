@@ -29,7 +29,7 @@ class ClientesBusca extends TPage{
         new TMessage('error', 'Acesso restrito: apenas atendentes e supervisores podem acessar essa tela',
         new TAction(['Home', 'onReload']));
         exit;
-      }
+    }
     
     $this -> form = new BootstrapFormBuilder('form_clientes_busca');
     $this -> form -> setFormTitle('Busca de Clientes');
